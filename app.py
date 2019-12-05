@@ -6,6 +6,7 @@ import cgi
 import shutil
 import mimetypes
 import re
+import socketserver
 
 from io import StringIO
 
@@ -42,7 +43,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #BaseHTTPSer
     def do_POST(self):
         """Serve a POST request."""
         r, info = self.deal_post_data()
-        print r, info, "by: ", self.client_address
+        print(r + info + "by: " + self.client_address)
         f = StringIO()
         f.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
         f.write("<html>\n<title>Upload Result Page</title>\n")
@@ -268,4 +269,10 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #BaseHTTPSer
         '.h': 'text/plain',
         })
 
+PORT = 8013
 
+Handler = SimpleHTTPRequestHandler
+
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print("serving at port {}",PORT)
+    httpd.serve_forever()
