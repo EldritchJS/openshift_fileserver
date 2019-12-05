@@ -269,7 +269,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler): #BaseHTTPSer
         '.h': 'text/plain',
         })
 
-PORT = 8080
+PORT = 8000
 
 Handler = SimpleHTTPRequestHandler
 
